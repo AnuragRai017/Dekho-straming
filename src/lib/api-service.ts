@@ -1,4 +1,4 @@
-import { TMDB_API_KEY, TMDB_API_READ_TOKEN, TMDB_BASE_URL, VIDSRC_BASE_URL, TMDBMovie, TMDBTVShow, TMDBEpisode, VidsrcLatestItem } from './api-config';
+import { TMDB_API_READ_TOKEN, TMDB_BASE_URL, VIDSRC_BASE_URL, TMDBMovie, TMDBTVShow, VidsrcLatestItem } from './api-config';
 
 // TMDB API Service
 export const tmdbFetch = async (endpoint: string, params: Record<string, string> = {}) => {
@@ -12,13 +12,18 @@ export const tmdbFetch = async (endpoint: string, params: Record<string, string>
   return response.json();
 };
 
-export const getPopularMovies = async (page: number = 1): Promise<{ results: TMDBMovie[] }> => {
-  return tmdbFetch('/movie/popular', { page: page.toString() });
-};
+export async function getPopularMovies() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/movie/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`);
+  if (!res.ok) throw new Error("Failed to fetch movies");
+  return res.json();
+}
 
-export const getPopularTVShows = async (page: number = 1): Promise<{ results: TMDBTVShow[] }> => {
-  return tmdbFetch('/tv/popular', { page: page.toString() });
-};
+export async function getPopularTVShows() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_TMDB_BASE_URL}/tv/popular?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`);
+  if (!res.ok) throw new Error("Failed to fetch TV shows");
+  return res.json();
+}
+
 
 export const searchMedia = async (query: string, page: number = 1): Promise<{ results: (TMDBMovie | TMDBTVShow)[] }> => {
   return tmdbFetch('/search/multi', { query, page: page.toString() });

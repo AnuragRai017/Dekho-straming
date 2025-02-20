@@ -1,10 +1,10 @@
-import Image from "next/image";
-
 'use client';
 
 import { useEffect, useState } from 'react';
-import { TMDBMovie, TMDBTVShow, getTMDBImageUrl, getVidsrcMovieUrl, getVidsrcTVUrl } from '@/lib/api-config';
+import { TMDBMovie, TMDBTVShow, getTMDBImageUrl } from '@/lib/api-config';
 import { getPopularMovies, getPopularTVShows } from '@/lib/api-service';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Home() {
   const [movies, setMovies] = useState<TMDBMovie[]>([]);
@@ -35,11 +35,13 @@ export default function Home() {
 
     return (
       <div className="group bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-        <a href={linkUrl} className="block relative">
+        <Link href={linkUrl} className="block relative">
           <div className="relative">
-            <img
+            <Image
               src={getTMDBImageUrl(item.poster_path)}
               alt={title}
+              width={300}
+              height={450}
               className="w-full h-[300px] object-cover transition-transform duration-300 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-opacity duration-300 flex items-center justify-center">
@@ -68,7 +70,7 @@ export default function Home() {
               <span className="text-gray-400 ml-1">{item.vote_average.toFixed(1)}</span>
             </div>
           </div>
-        </a>
+        </Link>
       </div>
     );
   };

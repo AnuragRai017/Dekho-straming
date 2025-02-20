@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { TMDBMovie, TMDBTVShow } from '@/lib/api-config';
 import { searchMedia } from '@/lib/api-service';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function SearchBar() {
   const [query, setQuery] = useState('');
@@ -81,7 +83,7 @@ export default function SearchBar() {
       {isOpen && results.length > 0 && (
         <div className="absolute mt-2 w-full bg-gray-800 rounded-lg shadow-xl z-50 overflow-hidden">
           {results.map((item) => (
-            <a
+            <Link
               key={item.id}
               href={`/${getItemType(item)}/${item.id}`}
               className="block px-4 py-3 hover:bg-gray-700 transition-colors"
@@ -89,9 +91,11 @@ export default function SearchBar() {
             >
               <div className="flex items-center">
                 <div className="flex-shrink-0 w-10 h-14 mr-3">
-                  <img
+                  <Image
                     src={`https://image.tmdb.org/t/p/w92${item.poster_path}`}
                     alt={getItemTitle(item)}
+                    width={92}
+                    height={138}
                     className="w-full h-full object-cover rounded"
                   />
                 </div>
@@ -104,7 +108,7 @@ export default function SearchBar() {
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       )}

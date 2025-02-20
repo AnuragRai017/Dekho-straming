@@ -3,8 +3,15 @@
 import { useEffect, useState } from 'react';
 import { TMDBTVShow, getTMDBImageUrl, getVidsrcTVUrl } from '@/lib/api-config';
 import { tmdbFetch } from '@/lib/api-service';
+import Image from 'next/image';
 
-export default function ShowDetails({ params }: { params: { id: string } }) {
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default function ShowDetails({ params }: PageProps) {
   const [show, setShow] = useState<TMDBTVShow | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedSeason, setSelectedSeason] = useState(1);
@@ -36,10 +43,11 @@ export default function ShowDetails({ params }: { params: { id: string } }) {
       {/* Hero Section */}
       <div className="relative h-[70vh]">
         <div className="absolute inset-0">
-          <img
+          <Image
             src={getTMDBImageUrl(show.backdrop_path || show.poster_path, 'original')}
             alt={show.name}
-            className="w-full h-full object-cover"
+            layout="fill"
+            objectFit="cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
         </div>

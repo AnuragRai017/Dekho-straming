@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { use } from 'react';
 import { TMDBMovie, getTMDBImageUrl, getVidsrcMovieUrl } from '@/lib/api-config';
+import Image from 'next/image';
 import { tmdbFetch } from '@/lib/api-service';
 
 export default function MovieDetails({ params }: { params: Promise<{ id: string }> }) {
@@ -36,10 +37,11 @@ export default function MovieDetails({ params }: { params: Promise<{ id: string 
       {/* Hero Section */}
       <div className="relative h-[70vh]">
         <div className="absolute inset-0">
-          <img
+          <Image
             src={getTMDBImageUrl(movie.backdrop_path || movie.poster_path, 'original')}
             alt={movie.title}
-            className="w-full h-full object-cover"
+            layout="fill"
+            objectFit="cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
         </div>

@@ -11,6 +11,7 @@ export interface TMDBMovie {
   title: string;
   overview: string;
   poster_path: string;
+  backdrop_path: string | null;  // Added this property
   release_date: string;
   vote_average: number;
 }
@@ -20,8 +21,10 @@ export interface TMDBTVShow {
   name: string;
   overview: string;
   poster_path: string;
+  backdrop_path: string | null;  // Added this property
   first_air_date: string;
   vote_average: number;
+  number_of_seasons: number;
 }
 
 export interface TMDBEpisode {
